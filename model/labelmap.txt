@@ -1,0 +1,15 @@
+1-den-lice
+1-den-kuce
+1-den-fao
+1-den-krst
+1-den-nbrm
+2-den-lice
+2-den-riba
+2-den-fao
+5-den-lice
+5-den-ris
+5-den-fao
+10-den-lice
+10-den-paun
+50-den-lice
+50-den-ikona

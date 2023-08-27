@@ -1,0 +1,75 @@
+item {
+  id: 1
+  name: '1-den-lice'
+}
+
+item {
+  id: 2
+  name: '1-den-kuce'
+}
+
+item {
+  id: 3
+  name: '1-den-fao'
+}
+
+item {
+  id: 4
+  name: '1-den-krst'
+}
+
+item {
+  id: 5
+  name: '1-den-nbrm'
+}
+
+item {
+  id: 6
+  name: '2-den-lice'
+}
+
+item {
+  id: 7
+  name: '2-den-riba'
+}
+
+item {
+  id: 8
+  name: '2-den-fao'
+}
+
+item {
+  id: 9
+  name: '5-den-lice'
+}
+
+item {
+  id: 10
+  name: '5-den-ris'
+}
+
+item {
+  id: 11
+  name: '5-den-fao'
+}
+
+item {
+  id: 12
+  name: '10-den-lice'
+}
+
+item {
+  id: 13
+  name: '10-den-paun'
+}
+
+item {
+  id: 14
+  name: '50-den-lice'
+}
+
+item {
+  id: 15
+  name: '50-den-ikona'
+}
+
