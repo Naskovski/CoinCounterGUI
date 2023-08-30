@@ -3,6 +3,15 @@ import cv2
 import numpy as np
 import tensorflow as tf
 
+def get_coin_value(label):
+    # get coin value
+    if label[1] == "-":
+        coin_value = label[0]
+    else:
+        coin_value = label[:2]
+
+    return int(coin_value)
+
 def detectCoins(image_path):
     #loading needed files and settings
     interpreter = tf.lite.Interpreter(model_path="./model/detect.tflite")
@@ -42,38 +51,44 @@ def detectCoins(image_path):
 
     coin_counts = {}
 
+    images = {}
+    images[0] = input_image.copy()
+    for i in [1, 2, 5, 10, 50]:
+        images[i] = np.zeros((input_image.shape[0], input_image.shape[1], 4), dtype=np.uint8)
+        images[i][:, :] = (0, 0, 0, 0)
+
     # Print results
     for i in range(len(scores)):
         if ((scores[i] > 0.50) and (scores[i] <= 100.0)):
+            object_name = labels[int(classes[i])]  # Look up object name from "labels" array using class index
 
+            coin_value = get_coin_value(object_name)
+
+            # get bounding box
             ymin = int(max(1, (boxes[i][0] * imH)))
             xmin = int(max(1, (boxes[i][1] * imW)))
             ymax = int(min(imH, (boxes[i][2] * imH)))
             xmax = int(min(imW, (boxes[i][3] * imW)))
 
-            cv2.rectangle(input_image, (xmin, ymin), (xmax, ymax), (10, 255, 0), 2)
+            cv2.rectangle(images[coin_value], (xmin, ymin), (xmax, ymax), (10, 255, 0, 255), 2)
 
             # Draw
-            object_name = labels[int(classes[i])]  # Look up object name from "labels" array using class index
             label = '%s: %d%%' % (object_name, int(scores[i] * 100))  # Example: 'person: 72%'
             labelSize, baseLine = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)  # Get font size
             label_ymin = max(ymin, labelSize[1] + 10)  # Make sure not to draw label too close to top of window
-            cv2.rectangle(input_image, (xmin, label_ymin - labelSize[1] - 10), (xmin + labelSize[0], label_ymin + baseLine - 10),
-                          (255, 255, 255), cv2.FILLED)  # Draw white box to put label text in
-            cv2.putText(input_image, label, (xmin, label_ymin - 7), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0),
+            cv2.rectangle(images[coin_value], (xmin, label_ymin - labelSize[1] - 10), (xmin + labelSize[0], label_ymin + baseLine - 10),
+                          (255, 255, 255, 255), cv2.FILLED)  # Draw white box to put label text in
+            cv2.putText(images[coin_value], label, (xmin, label_ymin - 7), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0, 255),
                         2)  # Draw label text
 
             detections.append([object_name, scores[i], xmin, ymin, xmax, ymax])
 
-            # get coin value
-            if object_name[1] == "-":
-                coin_value = object_name[0]
-            else:
-                coin_value = object_name[:2]
 
-            total_value = total_value + int(coin_value)
+
+
 
             # update num of coins
+            total_value = total_value + coin_value
             if coin_value in coin_counts:
                 coin_counts[coin_value] += 1
             else:
@@ -83,15 +98,15 @@ def detectCoins(image_path):
         with open("./assets/results.txt", "w") as file:
             file.write("Total Value: {}\n".format(total_value))
             file.write("\nCoin Counts:\n")
-            for coin_value, count in coin_counts.items():
+            for coin_value, count in sorted(coin_counts.items()):
                 file.write("{} denar: {}\n".format(coin_value, count))
 
 
 
-    print(detections)
     print("Total value of coins detected: " + str(total_value))
 
-    # save the image with bounding boxes
-    cv2.imwrite("./assets/result.png", input_image)
+    # save the images with bounding boxes
+    for i, img in images.items():
+        cv2.imwrite("./assets/result"+str(i)+".png", img)
 
 
