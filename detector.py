@@ -51,6 +51,9 @@ def detectCoins(image_path):
 
     coin_counts = {}
 
+    for i in [1, 2, 5, 10, 50]:
+        coin_counts[i] = 0
+
     images = {}
     images[0] = input_image.copy()
     for i in [1, 2, 5, 10, 50]:
@@ -89,21 +92,16 @@ def detectCoins(image_path):
 
             # update num of coins
             total_value = total_value + coin_value
-            if coin_value in coin_counts:
-                coin_counts[coin_value] += 1
-            else:
-                coin_counts[coin_value] = 1
+            coin_counts[coin_value] += 1
+
 
         # Write .txt file
         with open("./assets/results.txt", "w") as file:
             file.write("Total Value: {}\n".format(total_value))
             file.write("\nCoin Counts:\n")
             for coin_value, count in sorted(coin_counts.items()):
-                file.write("{} denar: {}\n".format(coin_value, count))
+                file.write("{} - {} denar\n".format(count, coin_value))
 
-
-
-    print("Total value of coins detected: " + str(total_value))
 
     # save the images with bounding boxes
     for i, img in images.items():
