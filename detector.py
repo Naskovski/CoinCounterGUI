@@ -60,9 +60,10 @@ def detectCoins(image_path):
         images[i] = np.zeros((input_image.shape[0], input_image.shape[1], 4), dtype=np.uint8)
         images[i][:, :] = (0, 0, 0, 0)
 
+
     # Print results
     for i in range(len(scores)):
-        if ((scores[i] > 0.50) and (scores[i] <= 100.0)):
+        if ((scores[i] > 0.50) and (scores[i] <= 1.0)):
             object_name = labels[int(classes[i])]  # Look up object name from "labels" array using class index
 
             coin_value = get_coin_value(object_name)
@@ -76,19 +77,15 @@ def detectCoins(image_path):
             cv2.rectangle(images[coin_value], (xmin, ymin), (xmax, ymax), (10, 255, 0, 255), 2)
 
             # Draw
-            label = '%s: %d%%' % (object_name, int(scores[i] * 100))  # Example: 'person: 72%'
-            labelSize, baseLine = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)  # Get font size
-            label_ymin = max(ymin, labelSize[1] + 10)  # Make sure not to draw label too close to top of window
+            label = '%s: %d%%' % (object_name, int(scores[i] * 100))
+            labelSize, baseLine = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)
+            label_ymin = max(ymin, labelSize[1] + 10)
             cv2.rectangle(images[coin_value], (xmin, label_ymin - labelSize[1] - 10), (xmin + labelSize[0], label_ymin + baseLine - 10),
-                          (255, 255, 255, 255), cv2.FILLED)  # Draw white box to put label text in
+                          (255, 255, 255, 255), cv2.FILLED)
             cv2.putText(images[coin_value], label, (xmin, label_ymin - 7), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0, 255),
-                        2)  # Draw label text
+                        2)
 
             detections.append([object_name, scores[i], xmin, ymin, xmax, ymax])
-
-
-
-
 
             # update num of coins
             total_value = total_value + coin_value

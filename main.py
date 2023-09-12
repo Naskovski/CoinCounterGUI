@@ -100,10 +100,10 @@ if __name__ == '__main__':
     heading = ctk.CTkLabel(menu, text="CoinCounter", font=("Helvetica", 40))
     heading.pack(padx=20, pady=10)
 
-    btn_Open = ctk.CTkButton(menu, text="Load Image", command=second_window_logic)
+    btn_Open = ctk.CTkButton(menu, text="Вчитај Слика", command=second_window_logic)
     btn_Open.pack(pady=10)
 
-    btn_Close = ctk.CTkButton(menu, text="Close", command=close_app)
+    btn_Close = ctk.CTkButton(menu, text="Затвори", command=close_app)
     btn_Close.pack(pady=10)
 
 
