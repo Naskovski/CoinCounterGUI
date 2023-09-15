@@ -1,8 +1,8 @@
-Total Value: 79
+Total Value: 17
 
 Coin Counts:
-2 - 1 denar
-1 - 2 denar
-3 - 5 denar
+1 - 1 denar
+3 - 2 denar
+0 - 5 denar
 1 - 10 denar
-1 - 50 denar
+0 - 50 denar

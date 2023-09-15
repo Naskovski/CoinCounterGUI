@@ -83,7 +83,7 @@ def second_window_logic():
 def close_app():
     menu.destroy()
 
-# Press the green button in the gutter to run the script.
+
 if __name__ == '__main__':
     menu = ctk.CTk()
     menu.title("CoinCounter")

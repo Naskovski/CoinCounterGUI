@@ -44,13 +44,10 @@ def detectCoins(image_path):
     boxes = interpreter.get_tensor(output_details[1]['index'])[0]
     classes = interpreter.get_tensor(output_details[3]['index'])[0]
     scores = interpreter.get_tensor(output_details[0]['index'])[0]
-    num_detections = int(output_details[3]['index'])
 
-    detections = []
-    total_value=0
 
+    total_value = 0
     coin_counts = {}
-
     for i in [1, 2, 5, 10, 50]:
         coin_counts[i] = 0
 
@@ -64,8 +61,7 @@ def detectCoins(image_path):
     # Print results
     for i in range(len(scores)):
         if ((scores[i] > 0.50) and (scores[i] <= 1.0)):
-            object_name = labels[int(classes[i])]  # Look up object name from "labels" array using class index
-
+            object_name = labels[int(classes[i])]
             coin_value = get_coin_value(object_name)
 
             # get bounding box
@@ -85,7 +81,6 @@ def detectCoins(image_path):
             cv2.putText(images[coin_value], label, (xmin, label_ymin - 7), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0, 255),
                         2)
 
-            detections.append([object_name, scores[i], xmin, ymin, xmax, ymax])
 
             # update num of coins
             total_value = total_value + coin_value
