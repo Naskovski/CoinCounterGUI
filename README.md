@@ -34,6 +34,9 @@ Coin detection, recognition, and calculation of total value. Detection and recog
 2. Using the GUI load a picture by clicking on "Вчитај Слика"
 
 ![Main Menu](./README-files/main_menu.png) 
-4. When a picture is selected you will see the picture with a bounding box around every coin, and the total sum given in the upper right corner
+
+3. When a picture is selected you will see the picture with a bounding box around every coin, and the total sum given in the upper right corner
+
 ![Coin display](./README-files/detected_coins_display.png)
-5. Additionaly, you can set the bounding box to be displayed only for the preffered coin denomination by unselecting the checkmark on the right side near the coin count by denomination
+
+4. Additionaly, you can set the bounding box to be displayed only for the preffered coin denomination by unselecting the checkmark on the right side near the coin count by denomination
